@@ -27,7 +27,7 @@ with Path(__file__).with_name("comments.csv").open(
         counts[actual_categories.index(actual), predicted_categories.index(predicted)] += 1
 
 plt.imshow(counts, cmap="Blues")
-plt.xticks(range(len(predicted_categories)), predicted_categories)
+plt.xticks(range(len(predicted_categories)), predicted_categories, rotation=30, ha="right")
 plt.yticks(range(len(actual_categories)), actual_categories)
 plt.xlabel("Predicted category")
 plt.ylabel("Actual category")
@@ -35,7 +35,8 @@ plt.title("Confusion Matrix - Code Review Comment Classifier")
 
 for row in range(counts.shape[0]):
     for column in range(counts.shape[1]):
-        plt.text(column, row, str(counts[row, column]), ha="center", va="center")
+                text_colour = "white" if counts[row, column] > 3 else "black"
+                plt.text(column, row, str(counts[row, column]), ha="center", va="center", color=text_colour)
 
 plt.tight_layout()
 plt.savefig(Path(__file__).with_name("confusion_matrix.png"))
