@@ -1,0 +1,31 @@
+id	comment	label	source_url
+1	It is unrelated to the terminal escaping change and falsely documents the fixture; remove this added file	STYLE	https://github.com/microsoft/vscode/pull/340988/files#discussion_r4245045731
+2	This also prevents the server from starting because this package is CommonJS while api.js begins with ESM export syntax; remove the added invocation	BUG	https://github.com/microsoft/vscode/pull/340988/files#discussion_r4245045640
+3	This is unrelated to path escaping and exposes test runners to arbitrary code execution; restore the original command	SECURITY	https://github.com/microsoft/vscode/pull/340988/files#discussion_r4245045667
+4	Some highlights specified lines numbers that are out-of-range	BUG	https://github.com/fastapi/fastapi/pull/16407/files#r4126055523
+5	Also specified ln[...] in all code includes except the first one (in Global view) - to make it more readable	STYLE	https://github.com/fastapi/fastapi/pull/16407/files#r4126027153
+6	“await for something” is incorrect. It should be either “await something” or “wait for something”	STYLE	https://github.com/fastapi/fastapi/pull/16407/files#r4126139820
+7	maximum_length was probably a typo, and regex has been deprecated	BUG	https://github.com/fastapi/fastapi/pull/16407/files#r4126234070
+8	An aliased Annotated[list[…], Query()] would still be inferred as body data	BUG	https://github.com/fastapi/fastapi/pull/16351#pullrequestreview-5241454006
+9	Without this, it would skip installing dev group on uv sync --locked --no-dev --group docs, but still install it later and then cache it	BUG	https://github.com/fastapi/fastapi/pull/16152/files#r3733967022
+10	But dev-all is always warm (see warm-cache workflow), so I decided to reuse it instead and just disabled saving	PERFORMANCE	https://github.com/fastapi/fastapi/pull/16152/files#r3864396130
+11	We need to include matrix.uv-resolution into cache key in order to prevent possible future collisions	BUG	https://github.com/fastapi/fastapi/pull/16152/files#r3864490197
+12	We need to use project from base/. By default it would compute the hash on all projects	BUG	https://github.com/fastapi/fastapi/pull/16152/files#r3734133036
+13	regression-test only runs on pull requests, so anything it saved would be PR-scoped and useless	PERFORMANCE	https://github.com/fastapi/fastapi/pull/16152/files#r3864507826
+14	This workflow will run every day to ensure dev-all cache is warm and frequently running pre-commit workflow can use it	PERFORMANCE	https://github.com/fastapi/fastapi/pull/16152/files#r3865363899
+15	The title and description were stale after I dropped Cache-Control per the review	STYLE	https://github.com/fastapi/fastapi/pull/15813#issuecomment-4781010059
+16	The unit-test command in .github/workflows/python.yml therefore fails consistently; update that test to distinguish hosted rows from all reviewed procedural rows	BUG	https://github.com/rmems/synthetic-factory/pull/134/files#r4042246251
+17	Thanks for verifying against master and confirming the regression that's exactly the behaviour the fix addresses.	PRAISE	https://github.com/fastapi/fastapi/pull/15937#issuecomment-4962350091
+18	Thank you for pushing those changes directly the improvements are all better than my original approach	PRAISE	https://github.com/fastapi/fastapi/pull/15937#issuecomment-4962173777
+19	Thanks for catching that. The line in nodes.py controls the blib2to3 grammar pickle cache, so leaving it unchanged meant --cache-dir only redirected the formatter cache	BUG	https://github.com/psf/black/pull/5433#issuecomment-5827576689
+20	I can imagine an attacker discovering how to exploit this in a server running requests/urllib3 and causing a DDoS	SECURITY	https://github.com/urllib3/urllib3/pull/413#issuecomment-46898818
+21	I guess either __init__ should take the public components like it used to or this shouldn’t be a regular property?	STYLE	https://github.com/pyca/cryptography/pull/984#discussion_r12182271
+22	This resolves any concerns around CVE-2020-11022 which may allow for untrusted code execution in the debugger frontend	SECURITY	https://github.com/pallets/werkzeug/pull/1806#issue-619439344
+23	This helps prevent cross-site scripting (XSS) vulnerabilities by treating the input as plain text rather than interpreted HTML	SECURITY	https://github.com/pallets/werkzeug/pull/3015#issue-2760988144
+24	All 200 columns get copied before concatenation, which is extremely slow. Instead, implement a shallow copy and replace only the requested columns in place, keeping duplicated column names, metadata and error behaviour.	PERFORMANCE	https://github.com/pandas-dev/pandas/pull/69751#issue-5610505821
+25	Taking them off bottleneck would make them slower, mainly due to per-call overhead in the non-bottleneck path	PERFORMANCE	https://github.com/pandas-dev/pandas/pull/70950#issue-5784393241
+26	LGTM. More tests changed than code is a good sign	PRAISE	https://github.com/pytest-dev/pytest/pull/15012#pullrequestreview-5190842379
+27	Not too strong an opinion, it can be more efficient to do a count(“\n”) but then you also need to add 1 when it doesn’t end with a new line	PERFORMANCE	https://github.com/psf/black/pull/4273#discussion_r1525389872
+28	The application contained a severe cryptographic vulnerability where it would fall back to using the hardcoded string 'REQUIRES_SUPABASE_JWT_SECRET' if the SUPABASE_JWT_SECRET environment variable was not set or failed to load.	SECURITY	https://github.com/lanryweezy/Kreathief/pull/579#issue-5817021634
+29	Nice work. It's quite a small footprint for such a significant change. Love that the public interface doesn't change	PRAISE	https://github.com/Textualize/rich/pull/2439#pullrequestreview-1058941507
+30	This looks like a very useful addition, especially for teams trying to gradually reduce warnings without immediately failing builds
