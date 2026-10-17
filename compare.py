@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt
 
 classifiers = ["Keyword Classifier", "Regex/NFA Classifier"]
