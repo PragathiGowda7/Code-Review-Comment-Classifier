@@ -1,7 +1,13 @@
 import matplotlib.pyplot as plt
+from classifier import classify, read_comments
+import keyword_classifier
 
 classifiers = ["Keyword Classifier", "Regex/NFA Classifier"]
-accuracy = [69.0, 72.4]  # Update Regex after correcting for missing label
+rows, _ = read_comments("comments.csv", "comment", "label")
+rows = [(t, g) for t, g in rows if g]          # only labelled comments
+kw_ok = sum(keyword_classifier.classify(t) == g for t, g in rows)
+rx_ok = sum(classify(t)[0] == g for t, g in rows)
+accuracy = [100 * kw_ok / len(rows), 100 * rx_ok / len(rows)]
 
 plt.figure(figsize=(8, 5))
 bars = plt.bar(classifiers, accuracy)
