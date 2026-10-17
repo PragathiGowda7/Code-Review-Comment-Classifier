@@ -27,5 +27,5 @@ id	comment	label	source_url
 26	LGTM. More tests changed than code is a good sign	PRAISE	https://github.com/pytest-dev/pytest/pull/15012#pullrequestreview-5190842379
 27	Not too strong an opinion, it can be more efficient to do a count(“\n”) but then you also need to add 1 when it doesn’t end with a new line	PERFORMANCE	https://github.com/psf/black/pull/4273#discussion_r1525389872
 28	The application contained a severe cryptographic vulnerability where it would fall back to using the hardcoded string 'REQUIRES_SUPABASE_JWT_SECRET' if the SUPABASE_JWT_SECRET environment variable was not set or failed to load.	SECURITY	https://github.com/lanryweezy/Kreathief/pull/579#issue-5817021634
-29	Nice work. It's quite a small footprint for such a significant change. Love that the public interface doesn't change	PRAISE	https://github.com/Textualize/rich/pull/2439#pullrequestreview-1058941507
-30	This looks like a very useful addition, especially for teams trying to gradually reduce warnings without immediately failing builds
+29	Nice work. It's quite a small footprint for such a significant change. Love that the public interface doesn't change  PRAISE	https://github.com/Textualize/rich/pull/2439#pullrequestreview-1058941507
+30	This looks like a very useful addition, especially for teams trying to gradually reduce warnings without immediately failing builds  PRAISE
