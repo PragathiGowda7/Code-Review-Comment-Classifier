@@ -145,7 +145,10 @@ def classify(comment):
 
 def read_comments(path, comment_col, label_col):
     with open(path, newline="", encoding="utf-8-sig") as f:
-        reader = csv.DictReader(f, delimiter='\t')
+        header = f.readline()
+        f.seek(0)
+        delim = "\t" if header.count("\t") > header.count(",") else ","
+        reader = csv.DictReader(f, delimiter=delim)
         if comment_col not in (reader.fieldnames or []):
             sys.exit(f"Column '{comment_col}' not found. Columns: {reader.fieldnames}")
         has_labels = label_col in reader.fieldnames
@@ -197,18 +200,21 @@ def main():
     if not rows:
         sys.exit("No comments found in the CSV.")
 
-    gold, pred = [], []
+        gold, pred = [], []
     for i, (text, truth) in enumerate(rows, 1):
         label, matched, _ = classify(text)
         shown = ", ".join(repr(m) for m in matched) if matched else "no pattern matched"
         mark = ""
         if has_labels:
-            mark = "  [OK]" if label == truth else f"  [WRONG - expected {truth}]"
-            gold.append(truth)
-        pred.append(label)
+            if not truth:
+                mark = "  [no label - not scored]"
+            else:
+                mark = "  [OK]" if label == truth else f"  [WRONG - expected {truth}]"
+                gold.append(truth)
+                pred.append(label)
         print(f"Comment {i} -> {label} (matched: {shown}){mark}")
 
-    if has_labels:
+    if gold:
         accuracy_report(gold, pred, show_matrix=not args.no_matrix)
 
 
