@@ -1,17 +1,14 @@
-#!/usr/bin/env python3
 """
 Code Review Comment Classifier  (regex / NFA based)
-===================================================
-Role: Member 2 - regex patterns + classifier code.
 
 Every category (BUG, STYLE, PERFORMANCE, SECURITY, PRAISE) owns a list of
-regular expressions.  A regular expression is equivalent to an NFA, and the
+regular expressions.A regular expression is equivalent to an NFA, and the
 union (|) of NFAs is again an NFA, so all patterns are also combined into
 ONE big machine (COMBINED_NFA) in which every alternative is tagged with the
-name of its category.  A comment is "accepted" when that machine reaches an
+name of its category.A comment is "accepted" when that machine reaches an
 accepting state, i.e. at least one pattern matches.
 
-Tie-breaking (rule 3 of the project description - "combine them"):
+Tie-breaking :
     1. The category with the MOST distinct matched patterns wins.
     2. If the counts are tied, PRIORITY order decides:
        SECURITY > BUG > PERFORMANCE > STYLE > PRAISE   (more serious wins)
@@ -22,9 +19,9 @@ Usage:
     python classifier.py comments.csv --comment-col comment --label-col label
     python classifier.py comments.csv --no-matrix
 
-CSV format: a header row with a comment column and (optionally) a label
+CSV format:a header row with a comment column and (optionally) a label
 column holding the hand-labelled ground truth (BUG/STYLE/PERFORMANCE/
-SECURITY/PRAISE).  When the label column exists an accuracy report is
+SECURITY/PRAISE).When the label column exists an accuracy report is
 printed too.
 """
 
@@ -34,11 +31,9 @@ import re
 import sys
 from collections import OrderedDict
 
-# --------------------------------------------------------------------------
 # 1. Category regexes
 #    Each entry is (readable name, regex).  All are compiled case-insensitive.
 #    \b = word boundary, so "bug" does NOT match inside "debug".
-# --------------------------------------------------------------------------
 
 CATEGORIES = ["SECURITY", "BUG", "PERFORMANCE", "STYLE", "PRAISE"]  # = priority order
 
@@ -67,7 +62,7 @@ PATTERNS["STYLE"] = [
 ]
 
 PATTERNS["PERFORMANCE"] = [
-    # Big-O: O(n^2), O(n²), O(n**2), O(2^n), O(n!)  - 'O' must be a capital letter.
+    # Big-O: O(n^2), O(n²), O(n**2), O(2^n), O(n!)
     ("big-O",            r"(?-i:\bO\(\s*(?:n\s*(?:\^\s*\d|²|\*\*\s*\d)|2\s*\^\s*n|n!|n\s*log\s*n))"),
     ("slow/latency",     r"\b(?:slow(?:er|est|ly|s|down)?|sluggish|laggy|lag|latency|bottleneck|takes?\s+(?:forever|too\s+long)|hangs?)\b"),
     ("performance",      r"\b(?:performance|perf|inefficien\w*|efficien(?:t|cy)|optimi[sz]\w*|speed(?:\s*up)?|faster|throughput|overhead|expensive)\b"),
@@ -102,7 +97,6 @@ COMPILED = OrderedDict(
     for cat, pats in PATTERNS.items()
 )
 
-
 def build_combined_nfa():
     """Union of ALL category patterns -> one big machine.
 
@@ -115,13 +109,9 @@ def build_combined_nfa():
             alts.append(f"(?P<{cat}_{i}>{rx})")
     return re.compile("|".join(alts), re.IGNORECASE)
 
-
 COMBINED_NFA = build_combined_nfa()
 
-# --------------------------------------------------------------------------
 # 2. Classifier
-# --------------------------------------------------------------------------
-
 
 def find_matches(comment):
     """Return {category: [matched strings]} (one entry per matching pattern)."""
@@ -151,11 +141,7 @@ def classify(comment):
     label = tied[0]                                # CATEGORIES is already in priority order
     return label, found[label], found
 
-
-# --------------------------------------------------------------------------
 # 3. CSV + reporting
-# --------------------------------------------------------------------------
-
 
 def read_comments(path, comment_col, label_col):
     with open(path, newline="", encoding="utf-8-sig") as f:
@@ -170,7 +156,6 @@ def read_comments(path, comment_col, label_col):
                 gold = (r.get(label_col) or "").strip().upper() if has_labels else None
                 rows.append((text, gold))
     return rows, has_labels
-
 
 def accuracy_report(gold, pred, show_matrix=True):
     labels = ["BUG", "STYLE", "PERFORMANCE", "SECURITY", "PRAISE", "UNKNOWN"]
@@ -199,7 +184,6 @@ def accuracy_report(gold, pred, show_matrix=True):
         for g in labels[:5]:
             row = [sum(gg == g and pp == p for gg, pp in zip(gold, pred)) for p in labels]
             print(f"{g:<{w}}" + "".join(f"{n:>{w}}" for n in row))
-
 
 def main():
     ap = argparse.ArgumentParser(description="Regex/NFA code review comment classifier")
