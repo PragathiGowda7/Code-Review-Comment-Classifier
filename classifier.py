@@ -200,7 +200,7 @@ def main():
     if not rows:
         sys.exit("No comments found in the CSV.")
 
-        gold, pred = [], []
+    gold, pred = [], []
     for i, (text, truth) in enumerate(rows, 1):
         label, matched, _ = classify(text)
         shown = ", ".join(repr(m) for m in matched) if matched else "no pattern matched"
