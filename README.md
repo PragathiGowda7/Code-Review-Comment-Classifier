@@ -17,8 +17,9 @@ AI review tools can use this as a cheap pre-processing step: flag security comme
 ## Run
 
 ```
-pip install matplotlib numpy
+python -m pip install matplotlib numpy
 python classifier.py comments.csv
+python keyword_classifier.py comments.csv
 python compare.py
 python confusion_chart.py
 ```
